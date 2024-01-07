@@ -1,0 +1,1 @@
+python path_parse.py -path test
