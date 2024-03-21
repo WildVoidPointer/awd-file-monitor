@@ -1,5 +1,6 @@
 """ 
-path_file_monitor is a project for document monitoring and unified management in the AWD schedule of CTF competitions
+path_file_monitor is a project for document monitoring and 
+unified management in the AWD schedule of CTF competitions
 """
 
 from __future__ import annotations
@@ -27,23 +28,24 @@ class PathFileMonitor:
         self.current_scanning_res: list[str] = []
 
     @staticmethod
-    def set_directory_path() -> PathFileMonitor:
+    def set_directory_path() -> PathFileMonitor | None:
         file_parser: ArgumentParser = ArgumentParser(description='Welcome to the File Dynamic Monitor')
         file_parser.add_argument('-p', help="Specify a directory path")
         file_path: str = file_parser.parse_args().path
         try:
             path: Path = Path(file_path)
         except TypeError:
-            print(f"[{current_time}]  [runtime status]  Please enter an existing directory path")
+            MonitorStatus.runtime_status("Please enter an existing directory path")
             exit()
         else:
             if path.exists():  
-                print(f"""[{current_time}]  [runtime status]  The directory exists and scanning is about to begin: [{file_path}] """)
+                MonitorStatus.runtime_status(f"The directory exists and scanning is about to begin: [{file_path}]")
                 return PathFileMonitor(path=path)
             else:
-                print(f"[{current_time}]  [runtime status]  Please enter an existing directory path")
+                MonitorStatus.runtime_status("Please enter an existing directory path")
                 exit()
     
+
     def path_file_name_scanner(self) -> list[str]:
         temp_file_list: list[str] = []
         for file_path in self.path.rglob("*"):
