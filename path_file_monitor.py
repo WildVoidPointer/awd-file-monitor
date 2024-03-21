@@ -12,6 +12,12 @@ import time
 # if TYPE_CHECKING:
 #     from time import struct_time
 
+class MonitorStatus:
+    @staticmethod
+    def runtime_status(status_desc: str) -> None:
+        current_time: str= datetime.now().time().strftime("%H:%M:%S")
+        print(f"[{current_time}]  \033[91m[runtime_status]\033[0m  {status_desc}")
+
 
 class PathFileMonitor:
     def __init__(self, path: Path) -> None:
@@ -23,9 +29,8 @@ class PathFileMonitor:
     @staticmethod
     def set_directory_path() -> PathFileMonitor:
         file_parser: ArgumentParser = ArgumentParser(description='Welcome to the File Dynamic Monitor')
-        file_parser.add_argument('-path', help="Specify a directory path")
+        file_parser.add_argument('-p', help="Specify a directory path")
         file_path: str = file_parser.parse_args().path
-        current_time: str= datetime.now().time().strftime("%H:%M:%S")
         try:
             path: Path = Path(file_path)
         except TypeError:
